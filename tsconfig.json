@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es5",
+        "allowJs": false,
+        "strict": true,
+        "noEmit": true,
+        "importHelpers": false,
+        "noUnusedLocals": true,
+        "removeComments": false,
+        "strictNullChecks": true,
+        "lib": ["dom"],
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": [
+        "src",
+        "types"
+    ]
+}

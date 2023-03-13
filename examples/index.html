@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="../lib/index.min.js"></script>
+    <script>
+        // ws://121.40.165.18:8800
+        const ws = new SocketJS('wss://demo.piesocket.com/v3/channel_1?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self');
+        ws.$on('message', function (ev) {
+            console.log(JSON.stringify(ev.data));
+        });
+        ws.$on('close', function () {
+			console.log('close');
+        });
+        ws.$on('error', function () {
+			console.log('error');
+        });
+        ws.connect();
+    </script>
+</body>
+</html>
