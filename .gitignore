@@ -3,3 +3,4 @@ node_modules
 
 *.njsproj
 yarn.lock
+lib

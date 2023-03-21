@@ -58,7 +58,7 @@ export default class Heartbaet {
 
 	// 开始
 	public start() {
-		if (this.disabled) return;
+		if (this.disabled || this.isRuning) return;
 		this.isRuning = true;
 		this._looper();
 		this._timeout();

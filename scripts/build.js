@@ -46,7 +46,7 @@ async function buildEntry() {
             format: 'umd',
             name: 'SocketJS',
             banner,
-            file: `lib/index.min.js`
+            file: `lib/wsocketjs.min.js`
         });
     } catch (e) {
         console.error('构建失败:', e);

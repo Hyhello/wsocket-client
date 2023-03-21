@@ -1,9 +1,9 @@
 {
-    "name": "wsocket-client",
+    "name": "wsocketjs-client",
     "version": "0.0.1",
     "description": "WebSocket for browser",
     "author": "hyhello <673089899@qq.com>",
-    "main": "lib/index.min.js",
+    "main": "lib/wsocketjs.min.js",
     "types": "./types/index.d.ts",
     "license": "MIT",
     "scripts": {
@@ -22,7 +22,8 @@
         "websocket"
     ],
     "files": [
-        "lib"
+        "lib",
+        "types"
     ],
     "bugs": {
         "url": "https://github.com/Hyhello/deployed/issues"

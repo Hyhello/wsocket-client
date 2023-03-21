@@ -28,7 +28,7 @@ export default class SocketJS {
 	$opts: ISocketOptions;
 	instance: WebSocket | null;
 	get readyState(): number;
-	connect(): void | this;
+	connect(): this;
 	send(msg: IMessageType): this;
 	close(): this;
 	$emit<T extends unknown[]>(type: string, ...list: T): void;

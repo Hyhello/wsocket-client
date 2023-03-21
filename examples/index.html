@@ -10,15 +10,12 @@
     <script src="../lib/index.min.js"></script>
     <script>
         // ws://121.40.165.18:8800
-        const ws = new SocketJS('wss://demo.piesocket.com/v3/channel_1?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self');
+        const ws = new SocketJS('ws://demo.piesocket.com/v3/channel_1?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self', { heartbeatPingText: 'hyhello' });
         ws.$on('message', function (ev) {
             console.log(JSON.stringify(ev.data));
         });
-        ws.$on('close', function () {
-			console.log('close');
-        });
-        ws.$on('error', function () {
-			console.log('error');
+        ws.$on('open', function () {
+			console.log('open');
         });
         ws.connect();
     </script>

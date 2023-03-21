@@ -52,8 +52,10 @@ export default class SocketJS extends Emitter {
 		// 网络监控
 		this._network = new Network(!this.$opts.networkWatch, (type) => {
 			if (type === 'online') {
+				console.log(type);
 				this._heartbeat.start();
 			} else {
+				console.log(type);
 				this._heartbeat.end();
 			}
 		});
