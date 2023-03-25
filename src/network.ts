@@ -14,6 +14,10 @@ export default class Network {
 		this.isRuning = false;
 	}
 
+	get onLine() {
+		return window.navigator.onLine;
+	}
+
 	private _bindEvent() {
 		this.isRuning = true;
 		window.addEventListener('online', this, false);

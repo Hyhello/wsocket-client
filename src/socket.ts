@@ -52,10 +52,10 @@ export default class SocketJS extends Emitter {
 		// 网络监控
 		this._network = new Network(!this.$opts.networkWatch, (type) => {
 			if (type === 'online') {
-				console.log(type);
+				// 重置重连次数
+				this._reconnectTimes = 0;
 				this._heartbeat.start();
 			} else {
-				console.log(type);
 				this._heartbeat.end();
 			}
 		});
@@ -69,7 +69,7 @@ export default class SocketJS extends Emitter {
 	// 重连
 	private _reconnect() {
 		const { reconnect, reconnectInterval, allowReconnectMaxTimes } = this.$opts;
-		if (!reconnect) return;
+		if (!reconnect || !this._network.onLine) return;
 		if (this._reconnectTimes >= allowReconnectMaxTimes) {
 			this._clear();
 			// 重置重连次数
