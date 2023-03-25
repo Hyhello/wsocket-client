@@ -64,6 +64,7 @@ export default class Heartbaet {
 		this._timeout();
 		return this;
 	}
+
 	public restart() {
 		if (this.disabled || !this.isRuning) return;
 		this._timeout();

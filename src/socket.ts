@@ -74,7 +74,9 @@ export default class SocketJS extends Emitter {
 			this._clear();
 			// 重置重连次数
 			this._reconnectTimes = 0;
-			return console.error('当前连接次数已达到最大：' + allowReconnectMaxTimes);
+			return console.error(
+				'The current number of connections has reached the maximum: ' + allowReconnectMaxTimes + ' times.'
+			);
 		}
 		if (this._rtimer) {
 			window.clearTimeout(this._rtimer);
@@ -144,7 +146,10 @@ export default class SocketJS extends Emitter {
 	}
 
 	public connect() {
-		if (!WebSocket) return console.error('当前浏览器不支持WebSocket协议，建议使用现在浏览器');
+		if (!WebSocket)
+			return console.error(
+				'The current browser does not support the WebSocket protocol. It is recommended to use the current browser.'
+			);
 		if (this.instance) return this;
 
 		try {
