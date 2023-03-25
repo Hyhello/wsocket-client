@@ -1,6 +1,6 @@
 {
     "name": "wsocketjs-client",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "description": "WebSocket for browser",
     "author": "hyhello <673089899@qq.com>",
     "main": "lib/wsocketjs.min.js",
