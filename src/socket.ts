@@ -148,6 +148,7 @@ export default class SocketJS extends Emitter {
 		if (this.instance) return this;
 
 		try {
+			this.$emit('connect');
 			this.instance = new WebSocket(this.$url, this.$opts.protocols);
 			this._bindEvent();
 		} catch (e) {
