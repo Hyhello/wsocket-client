@@ -120,6 +120,17 @@
             input.setAttribute('disabled', 'disabled');
             btn.setAttribute('disabled', 'disabled');
         });
+        ws.$on('reconnect', function () {
+            console.log('重连接中...');
+            input.setAttribute('disabled', 'disabled');
+            btn.setAttribute('disabled', 'disabled');
+        });
+        ws.$on('online', function () {
+            console.log('在线');
+        });
+        ws.$on('offline', function () {
+            console.log('离线');
+        });
         ws.$on('open', function () {
             console.log('连接成功!');
             input.removeAttribute('disabled');

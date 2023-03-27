@@ -54,6 +54,18 @@ options can be object.
 
 ```javascript
 const ws = new SocketJS('ws://xx.xx.xx.xx');
+ws.$on('connect', function () {
+    console.log('connect...');
+});
+ws.$on('reconnect', function () {
+    console.log('reconnect...');
+});
+ws.$on('online', function (ev) {
+    console.log('network is online');
+});
+ws.$on('offline', function (ev) {
+    console.log('network is offline');
+});
 ws.$on('message', function (ev) {
     console.log(JSON.stringify(ev.data));
 });

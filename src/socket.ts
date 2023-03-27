@@ -52,10 +52,12 @@ export default class SocketJS extends Emitter {
 		// 网络监控
 		this._network = new Network(!this.$opts.networkWatch, (type) => {
 			if (type === 'online') {
+				this.$emit('online');
 				// 重置重连次数
 				this._reconnectTimes = 0;
 				this._heartbeat.start();
 			} else {
+				this.$emit('offline');
 				this._heartbeat.end();
 			}
 		});
@@ -153,7 +155,11 @@ export default class SocketJS extends Emitter {
 		if (this.instance) return this;
 
 		try {
-			this.$emit('connect');
+			if (this._reconnectTimes === 0) {
+				this.$emit('connect');
+			} else {
+				this.$emit('reconnect');
+			}
 			this.instance = new WebSocket(this.$url, this.$opts.protocols);
 			this._bindEvent();
 		} catch (e) {
