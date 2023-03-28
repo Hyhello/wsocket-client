@@ -21,6 +21,7 @@
             height: 700px;
             border: 1px solid #cccccc;
             display: flex;
+            position: relative;
             flex-flow: column nowrap;
         }
         .ce-box__body {
@@ -84,7 +85,7 @@
         }
         .ce-box__input:disabled,
         .ce-box__btn:disabled {
-            opacity: 0.7;
+            opacity: 0.6;
             cursor: not-allowed;
         }
         .ce-box__li + .ce-box__li {
@@ -97,7 +98,7 @@
 </head>
 <body>
     <div class="ce-box">
-        <div class="ce-box__header">聊天软件</div>
+        <div class="ce-box__header">聊天软件<small></small></div>
         <div class="ce-box__body"></div>
         <div class="ce-box__footer">
             <input type="text" class="ce-box__input" placeholder="请输入内容" />
@@ -109,32 +110,50 @@
         const input = document.querySelector('.ce-box__input');
         const body = document.querySelector('.ce-box__body');
         const btn = document.querySelector('.ce-box__btn');
-        // 参考网上的连接做了简单的测试
-        const ws = new SocketJS('ws://demo.piesocket.com/v3/channel_1?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self');
+        const small = document.querySelector('small');
+        const setDisabledFn = function (bool) {
+            if (bool) {
+                input.setAttribute('disabled', 'disabled');
+                btn.setAttribute('disabled', 'disabled');
+            } else {
+                input.removeAttribute('disabled');
+                btn.removeAttribute('disabled');
+            }
+        };
+        // WebSocket 在线测试 v13 ：http://www.websocket-test.com/
+        const ws = new SocketJS('ws://121.40.165.18:8800');
         ws.$on('message', function (ev) {
             body.innerHTML += `<div class="ce-box__li">${JSON.stringify(ev.data)}</div>`;
             body.scrollTop = body.scrollHeight;
         });
         ws.$on('connect', function () {
             console.log('连接中...');
-            input.setAttribute('disabled', 'disabled');
-            btn.setAttribute('disabled', 'disabled');
+            small.innerHTML = '（连接中...）';
+            setDisabledFn(true);
         });
         ws.$on('reconnect', function () {
             console.log('重连接中...');
-            input.setAttribute('disabled', 'disabled');
-            btn.setAttribute('disabled', 'disabled');
+            small.innerHTML = '（重连接中...）';
+            setDisabledFn(true);
         });
         ws.$on('online', function () {
             console.log('在线');
+            small.innerHTML = '（在线）';
+            setDisabledFn(false);
+        });
+        ws.$on('close', function () {
+            small.innerHTML = '（离线）';
+            setDisabledFn(true);
         });
         ws.$on('offline', function () {
             console.log('离线');
+            small.innerHTML = '（离线）';
+            setDisabledFn(true);
         });
         ws.$on('open', function () {
             console.log('连接成功!');
-            input.removeAttribute('disabled');
-            btn.removeAttribute('disabled');
+            small.innerHTML = '（在线）';
+            setDisabledFn(false);
             input.onkeydown = (ev) => {
                 if (ev.keyCode === 13) {
                     btn.click();

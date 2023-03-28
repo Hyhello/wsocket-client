@@ -54,32 +54,46 @@ options can be object.
 
 ```javascript
 const ws = new SocketJS('ws://xx.xx.xx.xx');
+// 连接中，触发
 ws.$on('connect', function () {
     console.log('connect...');
 });
+// 重连中，触发
 ws.$on('reconnect', function () {
     console.log('reconnect...');
 });
+// 断网，再次连接网络触发
 ws.$on('online', function (ev) {
     console.log('network is online');
 });
+// 断网触发
 ws.$on('offline', function (ev) {
     console.log('network is offline');
 });
+// 收到消息触发
 ws.$on('message', function (ev) {
     console.log(JSON.stringify(ev.data));
 });
+// ws连接成功!
 ws.$on('open', function (ev) {
     console.log('open', ev);
 });
+// ws 连接失败！
 ws.$on('error', function (ev) {
     console.log('error', ev);
 });
+// ws 关闭
 ws.$on('close', function (ev) {
     console.log('close', ev);
 });
+// 连接
 ws.connect();
+
+// 主动关闭
+// ws.close();
 ```
+
+See the [Examples](https://github.com/Hyhello/wsocket-client/blob/main/examples/index.html) or [package source](https://github.com/Hyhello/wsocket-client) for more details.
 
 ### 支持情况
 
