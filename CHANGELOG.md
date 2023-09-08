@@ -1,5 +1,12 @@
 # 更新日志
 
+# [0.7.0](https://github.com/Hyhello/wsocket-client/compare/0.6.0...0.7.0) (2023-09-08)
+
+
+### Features
+
+* 添加destory方法，引入store存储 ([8c770c0](https://github.com/Hyhello/wsocket-client/commit/8c770c0ea54e8f614c02e7b5e2959622a9e88e38))
+
 # [0.6.0](https://github.com/Hyhello/wsocket-client/compare/0.5.0...0.6.0) (2023-03-28)
 
 
