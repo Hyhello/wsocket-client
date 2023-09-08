@@ -3,15 +3,17 @@
  * 时间：2022-05-31
  * 描述：心跳检测机制
  */
+import { warn } from '@/utils';
 
 export default class Network {
-	public isRuning: boolean; // 是否启动
-	disabled: boolean = window.navigator.onLine; // 是否启用
-	onnetchange: (str: string) => void;
-	constructor(disabled: boolean, onnetchange: (str: string) => void) {
-		this.disabled = 'onLine' in window.navigator && disabled;
-		this.onnetchange = onnetchange;
-		this.isRuning = false;
+	public isRunning = false; // 是否启动
+	public onChange: (type: string) => void;
+	public isSupported = 'onLine' in window.navigator; // 是否支持
+	constructor(onChange: (type: string) => void) {
+		if (!this.isSupported) {
+			warn('The current browser does not support network monitoring');
+		}
+		this.onChange = onChange;
 	}
 
 	get onLine() {
@@ -19,28 +21,28 @@ export default class Network {
 	}
 
 	private _bindEvent() {
-		this.isRuning = true;
+		this.isRunning = true;
 		window.addEventListener('online', this, false);
 		window.addEventListener('offline', this, false);
 	}
 
 	private _unbindEvent() {
-		this.isRuning = false;
+		this.isRunning = false;
 		window.removeEventListener('online', this, false);
 		window.removeEventListener('offline', this, false);
 	}
 
 	handleEvent(ev: Event) {
-		this.onnetchange(ev.type);
+		this.onChange(ev.type);
 	}
 
 	start() {
-		if (this.disabled || this.isRuning) return;
+		if (!this.isSupported || this.isRunning) return;
 		this._bindEvent();
 	}
 
 	end() {
-		if (this.disabled || !this.isRuning) return;
+		if (!this.isSupported || !this.isRunning) return;
 		this._unbindEvent();
 	}
 }

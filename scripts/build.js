@@ -3,6 +3,7 @@ const rollup = require('rollup');
 const packageJson = require('../package.json');
 const { terser } = require('rollup-plugin-terser');
 const filesize = require('rollup-plugin-filesize');
+const replace = require('@rollup/plugin-replace');
 const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('rollup-plugin-typescript2');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
@@ -19,13 +20,20 @@ const banner =
     ' */';
 
 const rollupConfig = {
-    input: 'src/socket.ts',
+    input: 'src/index.ts',
     plugins: [
         nodeResolve({
             extensions: ['.ts']
         }),
         commonjs(),
         typescript(),
+        replace({
+            preventAssignment: true,
+            values: {
+                '__NAMESPACE__': packageJson.name,
+                '__VERSION__': version
+            }
+        }),
         terser({
             output: {
                 ascii_only: true
@@ -44,9 +52,9 @@ async function buildEntry() {
         const bundle = await rollup.rollup(rollupConfig);
         bundle.write({
             format: 'umd',
-            name: 'SocketJS',
+            name: 'WSocketJS',
             banner,
-            file: `lib/wsocketjs.min.js`
+            file: `lib/index.min.js`
         });
     } catch (e) {
         console.error('构建失败:', e);

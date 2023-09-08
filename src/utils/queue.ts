@@ -1,37 +1,37 @@
 // 消息队列
-
-type ITaps = {
-	data: IMessageType; // 数据
-	fn: (data: IMessageType, next: () => void) => void; // 函数
-};
+import { ITaps } from '@/types';
 
 export default class Queue {
-	private isRuning: boolean;
+	private isRunning: boolean; // 运行状态
 	public taps: Array<ITaps>; // 消息队列集合
 	constructor() {
-		this.isRuning = false;
+		// 运行状态
+		this.isRunning = false;
 		// 消息队列集合
 		this.taps = [];
 	}
 	public enqueue(item: ITaps) {
-		const len = this.size();
-		this.taps[len] = item;
-		this.dequeue();
+		this.taps.push(item);
+		if (!this.isRunning) {
+			this.dequeue();
+		}
 	}
 	public dequeue() {
 		const len = this.size();
-		if (!len || this.isRuning) return;
-		this.isRuning = true;
+		if (!len) {
+			this.isRunning = false;
+			return;
+		}
+		this.isRunning = true;
 		const item = this.taps.shift();
 		const next = () => {
-			this.isRuning = false;
 			this.dequeue();
 		};
 		item?.fn(item?.data, next);
 	}
 	public clear() {
 		this.taps = [];
-		this.isRuning = false;
+		this.isRunning = false;
 	}
 	public size() {
 		return this.taps.length;

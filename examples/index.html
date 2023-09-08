@@ -105,12 +105,18 @@
             <button class="ce-box__btn">发送</button>
         </div>
     </div>
-    <script src="../lib/wsocketjs.min.js"></script>
+    <button id="destory">destory</button>
+    <button id="close">close</button>
+    <button id="connect">connect</button>
+    <script src="../lib/index.min.js"></script>
     <script>
         const input = document.querySelector('.ce-box__input');
         const body = document.querySelector('.ce-box__body');
         const btn = document.querySelector('.ce-box__btn');
         const small = document.querySelector('small');
+        const connect = document.querySelector('#connect');
+        const close = document.querySelector('#close');
+        const destory = document.querySelector('#destory');
         const setDisabledFn = function (bool) {
             if (bool) {
                 input.setAttribute('disabled', 'disabled');
@@ -120,9 +126,26 @@
                 btn.removeAttribute('disabled');
             }
         };
-        // WebSocket 在线测试 v13 ：http://www.websocket-test.com/
-        const ws = new SocketJS('ws://121.40.165.18:8800');
+
+        const ws = new WSocketJS('ws://localhost:8080');
+
+        connect.onclick = function () {
+            ws.connect();
+        }
+
+        close.onclick = function () {
+            ws.close();
+        }
+
+        destory.onclick = function () {
+            ws.destory();
+        }
+
+        let last = +new Date();
         ws.$on('message', function (ev) {
+            const now = +new Date();
+            console.log((now - last) / 1000 + 's');
+            last = now;
             body.innerHTML += `<div class="ce-box__li">${JSON.stringify(ev.data)}</div>`;
             body.scrollTop = body.scrollHeight;
         });
@@ -131,22 +154,31 @@
             small.innerHTML = '（连接中...）';
             setDisabledFn(true);
         });
-        ws.$on('reconnect', function () {
-            console.log('重连接中...');
+        ws.$on('reconnect', function (times) {
+            console.log('重连接中...', times);
             small.innerHTML = '（重连接中...）';
             setDisabledFn(true);
         });
         ws.$on('online', function () {
-            console.log('在线');
+            console.log('online');
             small.innerHTML = '（在线）';
             setDisabledFn(false);
         });
-        ws.$on('close', function () {
+        ws.$on('error', function (ev) {
+            console.log('error', ev.type);
+        });
+        ws.$on('close', function (ev) {
+            console.log('close', ev.code, ev.reason);
             small.innerHTML = '（离线）';
             setDisabledFn(true);
         });
         ws.$on('offline', function () {
-            console.log('离线');
+            console.log('offline');
+            small.innerHTML = '（离线）';
+            setDisabledFn(true);
+        });
+        ws.$on('destory', function () {
+            console.log('destory');
             small.innerHTML = '（离线）';
             setDisabledFn(true);
         });

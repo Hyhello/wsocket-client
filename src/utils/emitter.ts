@@ -1,16 +1,12 @@
-type EventType = {
-	[key: string]: Array<Function>;
-};
-
-// 监测类型
-const checkListenerType = (listener: Function) => {
+// checkListenerType
+export const checkListenerType = (listener: Function) => {
 	if (typeof listener !== 'function') {
 		throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
 	}
 };
 
 export default class Emitter {
-	private listeners: EventType;
+	private listeners: Record<string, Function[]>;
 	constructor() {
 		this.listeners = {};
 	}
@@ -38,5 +34,8 @@ export default class Emitter {
 			this.$off(type, _onceWrap);
 		};
 		this.$on(type, _onceWrap);
+	}
+	public $clear() {
+		this.listeners = {};
 	}
 }
