@@ -1,5 +1,5 @@
 // checkListenerType
-export const checkListenerType = (listener: Function) => {
+const checkListenerType = (listener: Function) => {
 	if (typeof listener !== 'function') {
 		throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof listener);
 	}
@@ -26,14 +26,6 @@ export default class Emitter {
 		const listenerList = this.listeners[type];
 		if (!Array.isArray(listenerList)) return;
 		this.listeners[type] = listenerList.filter((func) => func !== listener);
-	}
-	public $once(type: string, listener: Function) {
-		checkListenerType(listener);
-		const _onceWrap = (...args: unknown[]) => {
-			listener(...args);
-			this.$off(type, _onceWrap);
-		};
-		this.$on(type, _onceWrap);
 	}
 	public $clear() {
 		this.listeners = {};

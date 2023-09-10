@@ -13,10 +13,6 @@ export default class WSocketJS {
 			warn('WSocketJS is a constructor and should be called with the `new` keyword');
 		}
 
-		if (!url) {
-			warn('WSocketJS url address cannot be empty');
-		}
-
 		const id = getInstanceId();
 
 		// store
@@ -114,13 +110,11 @@ export default class WSocketJS {
 		};
 		// 接收消息
 		this.store.instance.onmessage = (ev) => {
-			const { heartbeatPingText, heartbeatPongText } = this.store.config;
-			const pingStr = JSON.stringify({ type: heartbeatPingText });
-			const pongStr = JSON.stringify({ type: heartbeatPongText });
+			const { heartbeatPongText } = this.store.config;
 			// 如果需要维持心跳
 			if (this.store.heartbeat?.isRunning) {
 				this.store.heartbeat?.restart();
-				if (ev.data === pingStr || ev.data === pongStr) return;
+				if (ev.data === JSON.stringify({ type: heartbeatPongText })) return;
 			}
 			this.$emit('message', ev);
 		};
@@ -130,12 +124,10 @@ export default class WSocketJS {
 	public connect() {
 		if (!this.store.id) return;
 		const { url } = this;
-		const { protocol } = this.store.config;
+		const { protocols } = this.store.config;
 
 		if (!('WebSocket' in window)) {
-			return warn(
-				'The current browser does not support the WebSocket protocol. It is recommended to use the current browser.'
-			);
+			return warn('The current browser does not support the WebSocket protocol. Suggest replacing the browser.');
 		}
 
 		if (this.store.instance) return this;
@@ -147,7 +139,7 @@ export default class WSocketJS {
 		}
 
 		try {
-			this.store.instance = new WebSocket(url, protocol);
+			this.store.instance = new WebSocket(url, protocols);
 			this._bindEvent();
 		} catch (e) {
 			warn(e);

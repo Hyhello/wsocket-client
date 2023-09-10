@@ -2,8 +2,8 @@
 export type IMessageType = string | Blob | ArrayBufferLike | ArrayBufferView;
 
 export declare type ISocketOptions = {
-	/** protocol,服务器选择的下属协议，默认：undefined. */
-	protocol?: string | string[];
+	/** protocols,服务器选择的下属协议，默认：undefined. */
+	protocols?: string | string[];
 	/** 网络监控，当开启时，网络断开，再次连上网，则进行重连，默认：true. */
 	networkWatch: boolean;
 	/** 是否维持心跳，目前只考虑维持客户端心跳，不考虑服务器心跳，如果考虑，则需要服务端收到客户端报文后，返回一段报文给客户端，默认：true. */

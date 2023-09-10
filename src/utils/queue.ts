@@ -17,7 +17,7 @@ export default class Queue {
 		}
 	}
 	public dequeue() {
-		const len = this.size();
+		const len = this.taps.length;
 		if (!len) {
 			this.isRunning = false;
 			return;
@@ -32,8 +32,5 @@ export default class Queue {
 	public clear() {
 		this.taps = [];
 		this.isRunning = false;
-	}
-	public size() {
-		return this.taps.length;
 	}
 }

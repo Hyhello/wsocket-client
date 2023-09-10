@@ -1,5 +1,5 @@
 export default {
-	protocol: undefined, // protocol,服务器选择的下属协议
+	protocols: undefined, // protocols,服务器选择的下属协议
 	networkWatch: true, // 网络监控，当开启时，网络断开，再次连上网，则进行重连
 	heartbeat: true, // 是否维持心跳，目前只考虑维持客户端心跳，不考虑服务器心跳，如果考虑，则需要服务端收到客户端报文后，返回一段报文给客户端
 	heartbeatInterval: 5000, // 心跳间隔(ms)

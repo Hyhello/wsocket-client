@@ -17,9 +17,9 @@ export default class Heartbeat {
 
 		const store = useStore(id);
 
-		if (store.config.heartbeatTimeout - store.config.heartbeatInterval <= 100) {
+		if (store.config.heartbeatTimeout - store.config.heartbeatInterval <= 500) {
 			tip(
-				'The interval between the configuration "heartbeatTimeout" and "heartbeatInterval" is close, which may cause duplicate reconnection issues. It is recommended to configure a minimum interval of 100ms'
+				'The interval between the configuration "heartbeatTimeout" and "heartbeatInterval" is close, which may cause duplicate reconnection issues. It is recommended to configure a minimum interval of 500ms'
 			);
 		}
 	}
