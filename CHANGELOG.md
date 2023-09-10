@@ -1,5 +1,12 @@
 # 更新日志
 
+## [0.7.1](https://github.com/Hyhello/wsocket-client/compare/0.7.0...0.7.1) (2023-09-10)
+
+
+### Bug Fixes
+
+* 修改protocol -> protocols，及去除冗余代码 ([57d2bcf](https://github.com/Hyhello/wsocket-client/commit/57d2bcf87ae3307129922e2732be8c044e0b7465))
+
 # [0.7.0](https://github.com/Hyhello/wsocket-client/compare/0.6.0...0.7.0) (2023-09-08)
 
 
